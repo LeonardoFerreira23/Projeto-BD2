@@ -25,29 +25,31 @@ class UsuarioDAO:
             print(f"An error occurred while reading user: {e}")
             return None
 
-    def update_user(self, id: str, nome: str = None, email: str = None, softwares: list = None, jogos: list = None):
-        """Atualiza um usuário pelo ID."""
-        try:
-            update_fields = {}
-            if nome:
-                update_fields["nome"] = nome
-            if email:
-                update_fields["email"] = email
-            if softwares is not None:
-                update_fields["softwares"] = softwares
-            if jogos is not None:
-                update_fields["jogos"] = jogos
 
-            if update_fields:
-                res = self.db.collection.update_one({"_id": ObjectId(id)}, {"$set": update_fields})
-                print(f"User updated: {res.modified_count} document(s) modified")
-                return res.modified_count
-            else:
-                print("No fields to update.")
-                return 0
-        except Exception as e:
-            print(f"An error occurred while updating user: {e}")
-            return None
+    def update_user(self, id: str, nome: str = None, email: str = None, softwares: list = None, jogos: list = None):
+            """Adiciona novos softwares ou jogos às listas de um usuário."""
+            try:
+                update_operations = {}
+
+                # Se softwares não for None, adicionar como lista (array) com "$each"
+                if softwares:
+                    update_operations["softwares"] = {"$each": softwares}  # Certificando-se de que é uma lista
+                if jogos:
+                    update_operations["jogos"] = {"$each": jogos}  # Certificando-se de que é uma lista
+
+                if update_operations:
+                    res = self.db.collection.update_one(
+                        {"_id": ObjectId(id)},  # Filtra pelo ID do usuário
+                        {"$push": update_operations}  # Adiciona itens às listas existentes
+                    )
+                    print(f"User updated: {res.modified_count} document(s) modified")
+                    return res.modified_count
+                else:
+                    print("No items to add.")
+                    return 0
+            except Exception as e:
+                print(f"An error occurred while updating user: {e}")
+                return None
 
     def delete_user(self, id: str):
         """Deleta um usuário pelo ID."""
