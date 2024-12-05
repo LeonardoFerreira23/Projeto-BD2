@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "_id": "Aventura",
+        "jogos": [
+            "Super Mario"
+        ]
+    }
+]

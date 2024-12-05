@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "nome": "Super Mario",
+        "ano": 1996
+    },
+    {
+        "nome": "Resident Evil 4",
+        "ano": 2004
+    },
+    {
+        "nome": "Fifa 23",
+        "ano": 2022
+    }
+]

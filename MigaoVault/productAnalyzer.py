@@ -49,7 +49,7 @@ class ProductAnalyzer:
 
 
 if __name__ == "__main__":
-    analyzer = ProductAnalyzer(database="Ludobox", collection="Usuarios")
+    analyzer = ProductAnalyzer(database="MigaoVault", collection="Usuarios")
 
     # Consultas relacionadas a jogos e softwares
     analyzer.games_by_genre("Aventura")  # Alterar para o gênero desejado
